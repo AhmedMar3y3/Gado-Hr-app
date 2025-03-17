@@ -16,8 +16,6 @@ return new class extends Migration
             $table->date('date');
             $table->time('attendance');
             $table->time('departure')->nullable();
-            $table->double('lat');
-            $table->double('lng');
             $table->tinyInteger('status')->default(0);
             $table->double('total_delay')->default(0);
             $table->double('overtime')->default(0);

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             LocationTableSeeder::class,
             EmployeesTableSeeder::class,
             HolidaysTableSeeder::class,
+            SettingsTableSeeder::class,
         ]);
     }
 }
