@@ -52,4 +52,17 @@ class Employee extends Authenticatable
     {
         return $this->belongsTo(Location::class);
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    public function checkRole($role)
+    {
+        if($role == 1) {
+            return true;
+        }
+        return false;
+    }
 }

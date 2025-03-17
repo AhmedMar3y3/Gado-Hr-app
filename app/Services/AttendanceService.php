@@ -6,7 +6,6 @@ use App\Enums\AttendanceStatus;
 use App\Models\Attendance;
 use App\Models\Setting;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class AttendanceService
 {
