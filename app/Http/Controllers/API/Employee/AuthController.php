@@ -7,6 +7,7 @@ use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Employee\Auth\LoginEmployeeRequest;
+use App\Http\Resources\AuthResource;
 
 class AuthController extends Controller
 {
@@ -22,7 +23,7 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken("Api token of {$user->name}")->plainTextToken;
-        return $this->successWithDataResponse($token);
+        return $this->successWithDataResponse(AuthResource::make($user)->setToken($token));
     }
     //Logout User
     public function logout()

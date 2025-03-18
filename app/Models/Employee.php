@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Role;
 use App\Traits\HasImage;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +27,11 @@ class Employee extends Authenticatable
         'location_id',
         'off_days',
         'salary',
+    ];
+
+    protected $casts = [
+
+        'role' => Role::class,
     ];
 
     public function job()
