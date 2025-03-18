@@ -6,7 +6,7 @@ use App\Models\Complaint;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\API\Employee\EmployeeResource;
-use App\Http\Requests\API\Manager\Issue\StoreIssueRequest;
+use App\Http\Requests\API\Employee\Issue\StoreIssueRequest;
 
 class ProfileController extends Controller
 {

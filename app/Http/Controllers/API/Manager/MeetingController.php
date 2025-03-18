@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Http\Controllers\API\Manager;
+
+use App\Models\Meeting;
+use App\Traits\HttpResponses;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\API\Manager\Meeting\StoreMeetingRequest;
+use App\Http\Resources\API\Manager\MeetingResource;
+
+class MeetingController extends Controller
+{
+    use HttpResponses;
+
+    public function index()
+    {
+        $user = auth('employee')->user();
+        $meetings = Meeting::where('employee_id',$user->id)
+        ->where('date',today())->with('participants')->get();
+        return $this->successWithDataResponse(MeetingResource::collection($meetings));
+    }
+    public function store(StoreMeetingRequest $request)
+    {
+        $meeting = Meeting::create($request->validated() + ['employee_id' => auth('employee')->id()]);
+        $meeting->participants()->attach($request->participants);
+        return $this->successResponse('تم إنشاء الاجتماع بنجاح');
+    }
+}

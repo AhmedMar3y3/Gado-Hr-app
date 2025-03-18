@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\API\Manager\Issue;
+namespace App\Http\Requests\API\Employee\Issue;
 
 use App\Http\Requests\BaseRequest;
-use Illuminate\Foundation\Http\FormRequest;
 
 class StoreIssueRequest extends BaseRequest
 {

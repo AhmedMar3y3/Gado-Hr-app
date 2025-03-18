@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\API\Manger\Report;
+namespace App\Http\Requests\API\Manager\Report;
 
 use App\Http\Requests\BaseRequest;
 

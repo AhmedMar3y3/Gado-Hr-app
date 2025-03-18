@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\API\Manager;
 
 use App\Models\Report;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\API\Manger\Report\UpdateReportRequest;
-use App\Http\Resources\API\Manager\ReportDetailsResource;
 use App\Traits\HttpResponses;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\API\Manager\ReportsResource;
+use App\Http\Resources\API\Manager\ReportDetailsResource;
+use App\Http\Requests\API\Manager\Report\UpdateReportRequest;
 
 class EmployeeReportController extends Controller
 {

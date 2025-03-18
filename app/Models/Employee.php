@@ -60,9 +60,15 @@ class Employee extends Authenticatable
 
     public function checkRole($role)
     {
-        if($role == 1) {
+        if ($role == 1) {
             return true;
         }
         return false;
     }
+
+    public function meetings()
+    {
+        return $this->belongsToMany(Meeting::class, 'meeting_participants', 'employee_id', 'meeting_id');
+    }
+
 }
