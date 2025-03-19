@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\AttendanceService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\Employee\AttendanceResource;
+use App\Http\Resources\API\Employee\DepartureResource;
 use App\Models\Attendance;
 
 class AttendanceController extends Controller
@@ -59,5 +61,26 @@ class AttendanceController extends Controller
         else {
             return $this->failureResponse('لقد أكملت الحضور والمغادرة لهذا اليوم.');
         }
+    }
+
+    public function attendanceHistory(Request $request)
+    {
+        $employee = Auth('employee')->user();
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        $attendances = $this->attendanceService->getAttendanceHistory($employee, $month, $year);
+
+        return $this->successWithDataResponse(AttendanceResource::collection($attendances));
+    }
+
+    public function departureHistory(Request $request)
+    {
+        $employee = Auth('employee')->user();
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        $departures = $this->attendanceService->getDepartureHistory($employee, $month, $year);
+        return $this->successWithDataResponse(DepartureResource::collection($departures));
     }
 }

@@ -16,10 +16,19 @@ class CheckRole
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next, $role)
-    {
-        if (auth('employee')->user()->role != $role) {
-            return $this->failureResponse('غير مصرح لك بالوصول إلى هذه الصفحة');
-        }
-        return $next($request);
+{
+    $user = auth('employee')->user();
+    
+    $userRoleValue = $user->role instanceof \App\Enums\Role
+        ? $user->role->value
+        : $user->role;
+
+    if ((int)$userRoleValue !== (int)$role) {
+        return $this->failureResponse('غير مصرح لك بالوصول إلى هذه الصفحة');
     }
+    
+    return $next($request);
+}
+
+    
 }

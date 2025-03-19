@@ -114,4 +114,30 @@ class AttendanceService
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
         return $earthRadius * $c;
     }
+
+    public function getAttendanceHistory($employee, $month = null, $year = null)
+    {
+        $query = $employee->attendances()->orderBy('date', 'asc');
+
+        if ($month && $year) {
+            $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+            $endDate = $startDate->copy()->endOfMonth();
+            $query->whereBetween('date', [$startDate, $endDate]);
+        }
+
+        return $query->get();
+    }
+
+    public function getDepartureHistory($employee, $month = null, $year = null)
+    {
+        $query = $employee->attendances()->whereNotNull('departure')->orderBy('date', 'desc');
+
+        if ($month && $year) {
+            $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+            $endDate = $startDate->copy()->endOfMonth();
+            $query->whereBetween('date', [$startDate, $endDate]);
+        }
+
+        return $query->get();
+    }
 }
