@@ -15,7 +15,7 @@ class AttendanceService
         $officeLat = $office->lat;
         $officeLon = $office->lng;
 
-        if($office->is_remote) {
+        if ($office->is_remote) {
             return true;
         }
 
@@ -32,8 +32,8 @@ class AttendanceService
         $attendanceTime = $currentTime->toTimeString();
 
         $attendance = Attendance::where('employee_id', $employee->id)
-                                ->where('date', $date)
-                                ->first();
+            ->where('date', $date)
+            ->first();
 
         if ($attendance && $attendance->attendance) {
             return false;
@@ -41,7 +41,7 @@ class AttendanceService
 
         $shift = $employee->shift;
         $shiftStart = Carbon::createFromFormat('H:i:s', $shift->start_time)
-                            ->setDate($currentTime->year, $currentTime->month, $currentTime->day);
+            ->setDate($currentTime->year, $currentTime->month, $currentTime->day);
 
         $delay = 0;
         $overtime = 0;
@@ -78,8 +78,8 @@ class AttendanceService
         $departureTime = $currentTime->toTimeString();
 
         $attendance = Attendance::where('employee_id', $employee->id)
-                                ->where('date', $date)
-                                ->first();
+            ->where('date', $date)
+            ->first();
 
         if (!$attendance || !$attendance->attendance || $attendance->departure) {
             return false;
@@ -87,7 +87,7 @@ class AttendanceService
 
         $shift = $employee->shift;
         $shiftEnd = Carbon::createFromFormat('H:i:s', $shift->end_time)
-                          ->setDate($currentTime->year, $currentTime->month, $currentTime->day);
+            ->setDate($currentTime->year, $currentTime->month, $currentTime->day);
 
         if ($currentTime->lessThan($shiftEnd)) {
             $earlyDeparture = $shiftEnd->diffInMinutes($currentTime);
@@ -109,8 +109,8 @@ class AttendanceService
         $dLat = deg2rad($lat2 - $lat1);
         $dLon = deg2rad($lon2 - $lon1);
         $a = sin($dLat / 2) * sin($dLat / 2) +
-             cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
-             sin($dLon / 2) * sin($dLon / 2);
+            cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+            sin($dLon / 2) * sin($dLon / 2);
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
         return $earthRadius * $c;
     }

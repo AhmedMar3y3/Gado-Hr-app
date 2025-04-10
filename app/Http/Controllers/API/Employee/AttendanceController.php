@@ -43,22 +43,20 @@ class AttendanceController extends Controller
         $date = $currentTime->toDateString();
 
         $attendance = Attendance::where('employee_id', $employee->id)
-                                ->where('date', $date)
-                                ->first();
+            ->where('date', $date)
+            ->first();
 
         if (!$attendance) {
             if ($this->attendanceService->recordCheckIn($employee, $currentTime)) {
                 return $this->successResponse('تم تسجيل الحضور بنجاح.');
             }
             return $this->failureResponse('حدث خطأ أثناء تسجيل الحضور.');
-        }
-        elseif ($attendance->attendance && !$attendance->departure) {
+        } elseif ($attendance->attendance && !$attendance->departure) {
             if ($this->attendanceService->recordCheckOut($employee, $currentTime)) {
                 return $this->successResponse('تم تسجيل المغادرة بنجاح.');
             }
             return $this->failureResponse('حدث خطأ أثناء تسجيل المغادرة.');
-        }
-        else {
+        } else {
             return $this->failureResponse('لقد أكملت الحضور والمغادرة لهذا اليوم.');
         }
     }

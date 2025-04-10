@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Role;
 use App\Traits\HasImage;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -33,6 +34,11 @@ class Employee extends Authenticatable
 
         'role' => Role::class,
     ];
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::make($password);
+    }
 
     public function job()
     {
@@ -64,13 +70,16 @@ class Employee extends Authenticatable
         return $this->hasMany(Report::class);
     }
 
-    public function checkRole($role)
+    public function deleteManagerId($request)
     {
-        if ($role == 1) {
+        if ($request->role == 1) {
+            $this->manager_id = null;
+            $this->save();
             return true;
         }
         return false;
     }
+
 
     public function meetings()
     {
@@ -86,5 +95,4 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(Leave::class);
     }
-
 }
