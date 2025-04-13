@@ -12,10 +12,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // Employees Routes
     Route::get('managers',              [EmployeesController::class, 'managers']);
     Route::post('add-employee',         [EmployeesController::class, 'AddEmployee']);
-    Route::put('employee/{employee}',   [EmployeesController::class, 'updateEmployee']);
+    Route::put('employees/{employee}',   [EmployeesController::class, 'updateEmployee']);
     Route::delete('employee/{employee}',[EmployeesController::class, 'deleteEmployee']);
     Route::get('all-employees',         [EmployeesController::class, 'allEmployees']);
-    Route::get('employee/{employee}',   [EmployeesController::class, 'showEmployee']);
+    Route::get('employees/{employee}',   [EmployeesController::class, 'showEmployee']);
    // Route::put('change-password/{employee}', [EmployeesController::class, 'changeEmployeePassword']);
 });
 
