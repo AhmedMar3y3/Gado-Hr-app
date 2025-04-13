@@ -48,12 +48,12 @@ class AttendanceController extends Controller
 
         if (!$attendance) {
             if ($this->attendanceService->recordCheckIn($employee, $currentTime)) {
-                return $this->successResponse('تم تسجيل الحضور بنجاح.');
+                return $this->successWithDataAndMessageResponse('تم تسجيل الحضور بنجاح.', 'attendance');
             }
             return $this->failureResponse('حدث خطأ أثناء تسجيل الحضور.');
         } elseif ($attendance->attendance && !$attendance->departure) {
             if ($this->attendanceService->recordCheckOut($employee, $currentTime)) {
-                return $this->successResponse('تم تسجيل المغادرة بنجاح.');
+                return $this->successWithDataAndMessageResponse('تم تسجيل المغادرة بنجاح.', 'departure');
             }
             return $this->failureResponse('حدث خطأ أثناء تسجيل المغادرة.');
         } else {

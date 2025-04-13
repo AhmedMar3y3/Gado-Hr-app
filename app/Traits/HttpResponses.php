@@ -26,6 +26,11 @@ trait HttpResponses
         return $this->response('success', 'تم بنجاح', $data, 200);
     }
 
+   public function successWithDataAndMessageResponse($message, $data)
+    {
+        return $this->response('success', $message, $data, 200);
+    }
+
     public function failureResponse($message)
     {
         return $this->response('failure', $message, [], 400);
