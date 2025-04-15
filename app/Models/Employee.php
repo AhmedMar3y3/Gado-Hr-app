@@ -95,4 +95,12 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(Leave::class);
     }
+
+    public function checkRole($role)
+    {
+        if($role == 1) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -16,9 +16,6 @@ class EmployeeReportController extends Controller
     public function employeeReports()
     {
         $user = auth('employee')->user();
-        if (!$user->checkRole($user->role)) {
-            return $this->failureResponse('غير مسموح لك بعرض تقارير الموظفين');
-        }
         $employeeIds = $user->employees->pluck('id');
         $reports = Report::whereIn('employee_id', $employeeIds)->where('is_confirmed', 0)->get();
             
@@ -28,9 +25,6 @@ class EmployeeReportController extends Controller
     public function show($id)
     {
         $user = auth('employee')->user();
-        if (!$user->checkRole($user->role)) {
-            return $this->failureResponse('غير مسموح لك بعرض هذا التقرير');
-        }
         $report = Report::findOrFail($id);
         if (!$report) {
             return $this->failureResponse('التقرير غير موجود');
@@ -45,9 +39,6 @@ class EmployeeReportController extends Controller
         $report = Report::findOrFail($id);
         if (!$report) {
             return $this->failureResponse('التقرير غير موجود');
-        }
-        if (!$user->checkRole($user->role)) {
-            return $this->failureResponse('غير مسموح لك بتعديل هذا التقرير');
         }
        
         $report->update($request->validated());
