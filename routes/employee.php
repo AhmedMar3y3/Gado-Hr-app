@@ -13,7 +13,6 @@ use App\Http\Controllers\API\Employee\FaqController;
 use App\Http\Controllers\API\Manager\EmployeeLeaveController;
 use App\Http\Controllers\API\Employee\MeetingController as EmployeeMeetingController;
 
-//TODO: use the middleware of the role for all the manager routes and remove the check from the model
 
 Route::post('login', [AuthController::class, 'login']);
 Route::middleware(['auth.employee'])->group(function () {
@@ -42,10 +41,8 @@ Route::middleware(['auth.employee'])->group(function () {
     // Faq routes
     Route::get('faqs',          [FaqController::class, 'index']);
 
-
-
     // Employee meeting routes
-    Route::get('my-meetings',            [EmployeeMeetingController::class, 'index']);
+    Route::get('my-meetings',   [EmployeeMeetingController::class, 'index']);
 });
 
 // Manager routes

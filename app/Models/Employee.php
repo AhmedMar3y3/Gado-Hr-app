@@ -96,9 +96,9 @@ class Employee extends Authenticatable
         return $this->hasMany(Leave::class);
     }
 
-    public function checkRole($role)
+    public function checkRole(Role $role)
     {
-        if($role == 1) {
+        if ($role === Role::MANAGER) {
             return true;
         }
         return false;
