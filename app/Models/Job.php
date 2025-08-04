@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+    ];
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }
