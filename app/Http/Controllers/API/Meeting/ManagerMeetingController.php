@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\API\Manager;
+namespace App\Http\Controllers\API\Meeting;
 
 use App\Models\Meeting;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Manager\Meeting\StoreMeetingRequest;
 use App\Http\Resources\API\Manager\MeetingResource;
+use App\Http\Resources\API\Manager\EmployeesResource;
 
-class MeetingController extends Controller
+class ManagerMeetingController extends Controller
 {
     use HttpResponses;
 
@@ -24,5 +25,10 @@ class MeetingController extends Controller
         $meeting = Meeting::create($request->validated() + ['employee_id' => auth('employee')->id()]);
         $meeting->participants()->attach($request->participants);
         return $this->successResponse('تم إنشاء الاجتماع بنجاح');
+    }
+
+       public function employees(){
+        $user = Auth('employee')->user();
+        return $this->successWithDataResponse(EmployeesResource::collection($user->employees));
     }
 }

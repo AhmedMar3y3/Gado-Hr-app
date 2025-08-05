@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Employee;
+namespace App\Http\Controllers\API\Faq;
 
 use App\Models\Faq;
 use App\Traits\HttpResponses;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Employee;
+namespace App\Http\Controllers\API\Leave;
 
 use App\Traits\HttpResponses;
 use App\Services\LeaveService;

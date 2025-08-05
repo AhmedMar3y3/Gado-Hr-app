@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Employee;
+namespace App\Http\Controllers\API\Attendence;
 
 use App\Traits\HttpResponses;
 use Carbon\Carbon;

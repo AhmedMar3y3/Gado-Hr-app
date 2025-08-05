@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Employee;
+namespace App\Http\Controllers\API\Meeting;
 
 use App\Http\Controllers\Controller;
 use App\Traits\HttpResponses;

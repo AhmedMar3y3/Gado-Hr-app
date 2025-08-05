@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Employee;
+namespace App\Http\Controllers\API\Report;
 
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;

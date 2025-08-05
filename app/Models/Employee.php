@@ -40,6 +40,11 @@ class Employee extends Authenticatable
         $this->attributes['password'] = Hash::make($password);
     }
 
+    public function login()
+    {
+        return $this->createToken('employee-token')->plainTextToken;
+    }
+
     public function job()
     {
         return $this->belongsTo(Job::class);

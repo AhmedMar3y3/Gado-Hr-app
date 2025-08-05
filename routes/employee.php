@@ -1,17 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\Employee\AuthController;
-use App\Http\Controllers\API\Employee\ReportController;
-use App\Http\Controllers\API\Employee\ProfileController;
-use App\Http\Controllers\API\Employee\AttendanceController;
-use App\Http\Controllers\API\Manager\EmployeeReportController;
-use App\Http\Controllers\API\Manager\MeetingController;
-use App\Http\Controllers\API\Manager\EmployeesController;
-use App\Http\Controllers\API\Employee\LeaveController;
-use App\Http\Controllers\API\Employee\FaqController;
-use App\Http\Controllers\API\Manager\EmployeeLeaveController;
-use App\Http\Controllers\API\Employee\MeetingController as EmployeeMeetingController;
+use App\Http\Controllers\API\Faq\FaqController;
+use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\Leave\LeaveController;
+use App\Http\Controllers\API\Report\ReportController;
+use App\Http\Controllers\API\Profile\ProfileController;
+use App\Http\Controllers\API\Meeting\MeetingController;
+use App\Http\Controllers\API\Leave\ManagerLeaveController;
+use App\Http\Controllers\API\Report\ManagerReportController;
+use App\Http\Controllers\API\Attendence\AttendanceController;
+use App\Http\Controllers\API\Meeting\ManagerMeetingController;
 
 
 Route::post('login', [AuthController::class, 'login']);
@@ -42,26 +41,26 @@ Route::middleware(['auth.employee'])->group(function () {
     Route::get('faqs',          [FaqController::class, 'index']);
 
     // Employee meeting routes
-    Route::get('my-meetings',   [EmployeeMeetingController::class, 'index']);
+    Route::get('my-meetings',   [MeetingController::class, 'index']);
 });
 
 // Manager routes
 Route::middleware(['auth.employee', 'role:1'])->group(function () {
 
     // Meeting routes
-    Route::get('meetings',               [MeetingController::class, 'index']);
-    Route::post('meetings',              [MeetingController::class, 'store']);
-    Route::get('employees',              [EmployeesController::class, 'employees']);
+    Route::get('meetings',               [ManagerMeetingController::class, 'index']);
+    Route::post('meetings',              [ManagerMeetingController::class, 'store']);
+    Route::get('employees',              [ManagerMeetingController::class, 'employees']);
 
     // Leave routes
-    Route::get('employee-leaves',        [EmployeeLeaveController::class, 'employeeLeaves']);
-    Route::get('leave-details/{id}',     [EmployeeLeaveController::class, 'leaveDetails']);
-    Route::put('accept-leave/{id}',      [EmployeeLeaveController::class, 'acceptLeave']);
-    Route::put('reject-leave/{id}',      [EmployeeLeaveController::class, 'rejectLeave']);
+    Route::get('employee-leaves',        [ManagerLeaveController::class, 'employeeLeaves']);
+    Route::get('leave-details/{id}',     [ManagerLeaveController::class, 'leaveDetails']);
+    Route::put('accept-leave/{id}',      [ManagerLeaveController::class, 'acceptLeave']);
+    Route::put('reject-leave/{id}',      [ManagerLeaveController::class, 'rejectLeave']);
 
     // Manager report routes
-    Route::get('/employees-reports',     [EmployeeReportController::class, 'employeeReports']);
-    Route::get('/employees-reports/{id}', [EmployeeReportController::class, 'show']);
-    Route::put('/reports/{id}',          [EmployeeReportController::class, 'update']);
-    Route::post('/confirm-report/{id}',  [EmployeeReportController::class, 'confirmReport']);
+    Route::get('/employees-reports'     ,[ManagerReportController::class, 'employeeReports']);
+    Route::get('/employees-reports/{id}',[ManagerReportController::class, 'show']);
+    Route::put('/reports/{id}'          ,[ManagerReportController::class, 'update']);
+    Route::post('/confirm-report/{id}'  ,[ManagerReportController::class, 'confirmReport']);
 });

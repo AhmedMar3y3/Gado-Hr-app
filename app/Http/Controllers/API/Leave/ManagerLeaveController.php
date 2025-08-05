@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Manager;
+namespace App\Http\Controllers\API\Leave;
 
 use App\Models\Leave;
 use App\Enums\Status;
@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\Manager\LeavesResource;
 use App\Http\Resources\API\Manager\LeaveDetailsResource;
 
-class EmployeeLeaveController extends Controller
+class ManagerLeaveController extends Controller
 {
     use HttpResponses;
     public function employeeLeaves()

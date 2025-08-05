@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Manager;
+namespace App\Http\Controllers\API\Report;
 
 use App\Models\Report;
 use App\Traits\HttpResponses;
@@ -9,7 +9,7 @@ use App\Http\Resources\API\Manager\ReportsResource;
 use App\Http\Resources\API\Manager\ReportDetailsResource;
 use App\Http\Requests\API\Manager\Report\UpdateReportRequest;
 
-class EmployeeReportController extends Controller
+class ManagerReportController extends Controller
 {
     use HttpResponses;
 

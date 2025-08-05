@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Employee;
+namespace App\Http\Controllers\API\Profile;
 
 use App\Models\Complaint;
 use App\Traits\HttpResponses;
