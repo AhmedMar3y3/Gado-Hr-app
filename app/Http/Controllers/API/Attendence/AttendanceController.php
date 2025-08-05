@@ -28,7 +28,7 @@ class AttendanceController extends Controller
             return $this->failureResponse('لم يتم العثور على الموظف.');
         }
 
-        if (empty($currentLat) || empty($currentLon)) {
+        if (empty($request->input('latitude')) || empty($request->input('longitude'))) {
             return $this->failureResponse('خطأ: يجب إدخال خط العرض وخط الطول.');
         }
 

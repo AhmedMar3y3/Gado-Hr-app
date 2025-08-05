@@ -14,9 +14,9 @@ class ShiftsTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('shifts')->insert([
-            ['title' => 'Morning Shift', 'start_time' => '08:00:00', 'end_time' => '16:00:00'],
-            ['title' => 'Afternoon Shift', 'start_time' => '12:00:00', 'end_time' => '20:00:00'],
-            ['title' => 'Night Shift', 'start_time' => '16:00:00', 'end_time' => '00:00:00'],
+            ['title' => 'شيفت صباحي', 'start_time' => '08:00:00', 'end_time' => '16:00:00'],
+            ['title' => 'شيفت مسائي', 'start_time' => '12:00:00', 'end_time' => '20:00:00'],
+            ['title' => 'شيفت ليلي', 'start_time' => '16:00:00', 'end_time' => '00:00:00'],
         ]);
     }
 }

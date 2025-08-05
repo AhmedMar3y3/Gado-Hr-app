@@ -10,7 +10,7 @@ class StoreMeetingRequest extends BaseRequest
     {
         return [
             'title' => 'required|string',
-            'date' => 'required|date',
+            'date' => 'required|date|after_or_equal:date',
             'time' => 'required|date_format:H:i',
             'link' => 'required|url',
             'participants' => 'required|array',

@@ -20,13 +20,6 @@ class SettingsTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'key' => 'deduction',
-                'value' => 80,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-
         ]);
     }
 }

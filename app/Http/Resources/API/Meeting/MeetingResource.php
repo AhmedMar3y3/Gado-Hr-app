@@ -20,7 +20,12 @@ class MeetingResource extends JsonResource
             'date' => $this->date,
             'time' => $this->time,
             'link' => $this->link,
-            'participants' => $this->participants->pluck('image'),
+            'participants' => $this->participants->map(function ($participant) {
+                return [
+                    'id' => $participant->id,
+                    'image' => $participant->image ?? env('APP_URL') . '/defaults/profile.webp',
+                ];
+            }),
         ];
     }
 }

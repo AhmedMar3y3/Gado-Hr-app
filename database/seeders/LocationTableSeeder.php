@@ -14,7 +14,7 @@ class LocationTableSeeder extends Seeder
     {
         DB::table('locations')->insert([
             [
-                'title' => 'Office',
+                'title' => 'المكتب',
                 'is_remote' => false,
                 'lat' => 40.712776,
                 'lng' => -74.005974,
@@ -22,7 +22,7 @@ class LocationTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'title' => 'Sales',
+                'title' => 'المبيعات',
                 'is_remote' => true,
                 'lat' => null,
                 'lng' => null,
@@ -30,7 +30,7 @@ class LocationTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'title' => 'Store',
+                'title' => 'المتجر',
                 'is_remote' => false,
                 'lat' => 51.507351,
                 'lng' => -0.127758,
@@ -38,7 +38,7 @@ class LocationTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'title' => 'Home',
+                'title' => 'المنزل',
                 'is_remote' => true,
                 'lat' => null,
                 'lng' => null,
@@ -46,7 +46,7 @@ class LocationTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'title' => 'Hunger',
+                'title' => 'المخزن',
                 'is_remote' => false,
                 'lat' => 35.689487,
                 'lng' => 139.691711,

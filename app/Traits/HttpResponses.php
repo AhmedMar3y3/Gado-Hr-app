@@ -29,6 +29,11 @@ trait HttpResponses
         return $this->response('success', __('messages.success'), $data, 200);
     }
 
+    public function successWithDataAndMessageResponse($message, $data)
+    {
+        return $this->response('success', $message, $data, 200);
+    }
+
     public function unauthenticatedResponse()
     {
         return $this->response('unauthenticated', __('messages.unauthenticated'), [], 401);

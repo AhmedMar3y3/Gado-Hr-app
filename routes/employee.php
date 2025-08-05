@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Faq\FaqController;
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\Home\HomeController;
 use App\Http\Controllers\API\Leave\LeaveController;
 use App\Http\Controllers\API\Report\ReportController;
 use App\Http\Controllers\API\Profile\ProfileController;
@@ -17,6 +18,9 @@ Route::post('login'          , [AuthController::class, 'login']);
 Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
 Route::middleware(['auth.employee'])->group(function () {
     Route::post('logout'         , [AuthController::class, 'logout']);
+
+    // Home screen route
+    Route::get('home-screen',   [HomeController::class, 'homeScreen']);
 
     // Profile routes
     Route::get('profile',       [ProfileController::class, 'getProfile']);
@@ -65,3 +69,5 @@ Route::middleware(['auth.employee', 'role:1'])->group(function () {
     Route::put('/reports/{id}'          ,[ManagerReportController::class, 'update']);
     Route::post('/confirm-report/{id}'  ,[ManagerReportController::class, 'confirmReport']);
 });
+
+

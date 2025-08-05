@@ -9,4 +9,14 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+
+    public function jobTypes()
+    {
+        return [
+            'driver' => 'سائق',
+            'sales' => 'مبيعات',
+            'technician' => 'فني',
+            'other' => 'اي وظيفة اخرى',
+        ];
+    }
 }
