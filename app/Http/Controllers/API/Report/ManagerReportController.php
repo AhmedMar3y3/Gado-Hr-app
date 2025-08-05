@@ -5,9 +5,9 @@ namespace App\Http\Controllers\API\Report;
 use App\Models\Report;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\Manager\ReportsResource;
-use App\Http\Resources\API\Manager\ReportDetailsResource;
-use App\Http\Requests\API\Manager\Report\UpdateReportRequest;
+use App\Http\Requests\API\Report\UpdateReportRequest;
+use App\Http\Resources\API\Report\EmployeeReportsResource;
+use App\Http\Resources\API\Report\EmployeeReportDetailsResource;
 
 class ManagerReportController extends Controller
 {
@@ -17,9 +17,8 @@ class ManagerReportController extends Controller
     {
         $user = auth('employee')->user();
         $employeeIds = $user->employees->pluck('id');
-        $reports = Report::whereIn('employee_id', $employeeIds)->where('is_confirmed', 0)->get();
-            
-        return $this->successWithDataResponse(ReportsResource::collection($reports));
+        $reports = Report::whereIn('employee_id', $employeeIds)->where('is_confirmed', 0)->get(); 
+        return $this->successWithDataResponse(EmployeeReportsResource::collection($reports));
     }
 
     public function show($id)
@@ -28,7 +27,7 @@ class ManagerReportController extends Controller
         if (!$report) {
             return $this->failureResponse('التقرير غير موجود');
         }
-        return $this->successWithDataResponse(new ReportDetailsResource($report));
+        return $this->successWithDataResponse(new EmployeeReportDetailsResource($report));
     }
     
     public function update(UpdateReportRequest $request, $id)

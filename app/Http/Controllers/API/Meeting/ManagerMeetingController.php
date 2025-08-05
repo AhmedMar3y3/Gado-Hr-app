@@ -5,9 +5,9 @@ namespace App\Http\Controllers\API\Meeting;
 use App\Models\Meeting;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\Manager\Meeting\StoreMeetingRequest;
-use App\Http\Resources\API\Manager\MeetingResource;
-use App\Http\Resources\API\Manager\EmployeesResource;
+use App\Http\Resources\API\Meeting\MeetingResource;
+use App\Http\Requests\API\Meeting\StoreMeetingRequest;
+use App\Http\Resources\API\Employee\EmployeesResource;
 
 class ManagerMeetingController extends Controller
 {

@@ -6,9 +6,9 @@ use App\Traits\HttpResponses;
 use App\Services\LeaveService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\Employee\LeaveResource;
-use App\Http\Requests\API\Employee\Leave\StoreLeaveRequest;
-use App\Http\Resources\API\Employee\LeaveStatisticsResource;
+use App\Http\Resources\API\Leave\LeaveResource;
+use App\Http\Requests\API\Leave\StoreLeaveRequest;
+use App\Http\Resources\API\Leave\LeaveStatisticsResource;
 
 class LeaveController extends Controller
 {

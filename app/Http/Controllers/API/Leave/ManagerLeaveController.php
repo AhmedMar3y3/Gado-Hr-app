@@ -6,8 +6,8 @@ use App\Models\Leave;
 use App\Enums\Status;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\Manager\LeavesResource;
-use App\Http\Resources\API\Manager\LeaveDetailsResource;
+use App\Http\Resources\API\Leave\LeavesResource;
+use App\Http\Resources\API\Leave\LeaveDetailsResource;
 
 class ManagerLeaveController extends Controller
 {

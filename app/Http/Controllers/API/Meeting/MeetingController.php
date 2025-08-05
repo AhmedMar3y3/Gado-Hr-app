@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API\Meeting;
 
-use App\Http\Controllers\Controller;
 use App\Traits\HttpResponses;
-use App\Http\Resources\API\Manager\MeetingResource;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\API\Meeting\MeetingResource;
 
 class MeetingController extends Controller
 {

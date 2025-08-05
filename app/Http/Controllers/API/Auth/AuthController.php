@@ -5,10 +5,10 @@ namespace App\Http\Controllers\API\Auth;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
-use App\Http\Resources\AuthResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\Employee\Auth\LoginEmployeeRequest;
+use App\Http\Resources\API\Auth\AuthResource;
+use App\Http\Requests\API\Auth\LoginEmployeeRequest;
 
 class AuthController extends Controller
 {

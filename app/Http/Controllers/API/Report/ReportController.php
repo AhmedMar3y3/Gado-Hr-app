@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API\Report;
 
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\Employee\Report\StoreReportRequest;
-use App\Http\Resources\API\Employee\ReportDetailsResource;
-use App\Http\Resources\API\Employee\ReportsResource;
+use App\Http\Resources\API\Report\ReportsResource;
+use App\Http\Requests\API\Report\StoreReportRequest;
+use App\Http\Resources\API\Report\ReportDetailsResource;
 
 class ReportController extends Controller
 {

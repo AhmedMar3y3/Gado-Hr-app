@@ -6,8 +6,8 @@ use App\Enums\Role;
 use App\Models\Employee;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\Admin\Employee\AddEmployeeRequest;
-use App\Http\Requests\API\Admin\Employee\UpdateEmployeeRequest;
+use App\Http\Requests\Admin\Employee\AddEmployeeRequest;
+use App\Http\Requests\Admin\Employee\UpdateEmployeeRequest;
 
 class EmployeesController extends Controller
 {

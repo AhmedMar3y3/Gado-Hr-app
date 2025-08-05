@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API\Article;
 use App\Models\Article;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\Manager\ArticlesResource;
-use App\Http\Requests\API\Manager\Article\StoreArticleRequest;
+use App\Http\Resources\API\Article\ArticlesResource;
+use App\Http\Requests\API\Article\StoreArticleRequest;
 
 class ManagerArticleController extends Controller
 {

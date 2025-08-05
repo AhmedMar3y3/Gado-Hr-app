@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\API\Attendence;
 
-use App\Traits\HttpResponses;
 use Carbon\Carbon;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
 use App\Services\AttendanceService;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\Employee\AttendanceResource;
-use App\Http\Resources\API\Employee\DepartureResource;
-use App\Models\Attendance;
+use App\Http\Resources\API\Attendence\DepartureResource;
+use App\Http\Resources\API\Attendence\AttendanceResource;
 
 class AttendanceController extends Controller
 {

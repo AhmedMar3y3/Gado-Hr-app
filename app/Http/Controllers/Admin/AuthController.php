@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\Admin\Auth\LoginAdminRequest;
-use App\Http\Requests\API\Admin\Auth\RegisterAdminRequest;
-use App\Http\Resources\API\Admin\Auth\AdminResource;
+use App\Http\Requests\Admin\Auth\LoginAdminRequest;
+use App\Http\Requests\Admin\Auth\RegisterAdminRequest;
+use App\Http\Resources\Admin\Auth\AdminResource;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Hash;
