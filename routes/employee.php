@@ -13,9 +13,10 @@ use App\Http\Controllers\API\Attendence\AttendanceController;
 use App\Http\Controllers\API\Meeting\ManagerMeetingController;
 
 
-Route::post('login', [AuthController::class, 'login']);
+Route::post('login'          , [AuthController::class, 'login']);
+Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
 Route::middleware(['auth.employee'])->group(function () {
-    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('logout'         , [AuthController::class, 'logout']);
 
     // Profile routes
     Route::get('profile',       [ProfileController::class, 'getProfile']);

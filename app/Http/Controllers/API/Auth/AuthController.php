@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Models\ForgetPasswordRequest;
 use App\Http\Resources\API\Auth\AuthResource;
 use App\Http\Requests\API\Auth\LoginEmployeeRequest;
+use App\Http\Requests\API\Auth\StoreForgotPasswordRequest;
 
 class AuthController extends Controller
 {
@@ -31,5 +33,12 @@ class AuthController extends Controller
     {
         $request->user('employee')->currentAccessToken()->delete();
         return $this->successResponse('تم تسجيل الخروج بنجاح');
+    }
+
+    // Forgot Password request
+    public function forgotPassword(StoreForgotPasswordRequest $request)
+    {
+        ForgetPasswordRequest::create($request->validated());
+        return $this->successResponse('تم إرسال الطلب بنجاح');
     }
 }

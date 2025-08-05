@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Enums\AttendanceStatus;
-use App\Models\Attendance;
-use App\Models\Setting;
 use Carbon\Carbon;
+use App\Models\Setting;
+use App\Models\Attendance;
+use App\Enums\AttendanceStatus;
 
 class AttendanceService
 {

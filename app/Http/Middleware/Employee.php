@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\HttpResponses;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Employee
 {
+    use HttpResponses;
     /**
      * Handle an incoming request.
      *
@@ -19,7 +21,7 @@ class Employee
         $employee = Auth::guard('employee')->user();
         
         if (!$employee) {
-            return response()->json(['message' => 'غير مصرح: يمكن للموظفين فقط الوصول إلى هذا المسار'], 403);
+            return $this->unauthenticatedResponse();
         }
     
         return $next($request);

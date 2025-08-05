@@ -20,7 +20,7 @@ class AuthResource extends JsonResource
             'id' => $this->id,
             'role' => $this->role->formattedName(),
             'job' => $this->job->title,
-            'image' => $this->image,
+            'image' => $this->image ?? env('APP_URL') . '/defaults/profile.webp',
             'token' => $this->token,
         ];
     }

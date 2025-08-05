@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Auth\LoginAdminRequest;
-use App\Http\Requests\Admin\Auth\RegisterAdminRequest;
-use App\Http\Resources\Admin\Auth\AdminResource;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Request;
+use App\Http\Resources\Admin\Auth\AdminResource;
+use App\Http\Requests\Admin\Auth\LoginAdminRequest;
+use App\Http\Requests\Admin\Auth\RegisterAdminRequest;
 
 class AuthController extends Controller
 {
@@ -36,9 +37,9 @@ class AuthController extends Controller
         return $this->successWithDataResponse(AdminResource::make($user)->setToken($token));
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
+        $request->user()->currentAccessToken()->delete();
         return $this->successResponse('تم تسجيل الخروج بنجاح');
     }
 }

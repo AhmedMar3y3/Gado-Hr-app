@@ -1,0 +1,23 @@
+{
+    "name": "mar3y/image-upload",
+    "description": "A package for handling image uploads in Laravel applications.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "mar3y\\ImageUpload\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.4|^8.0|^8.1|^8.2|^8.3",
+        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+        "illuminate/database": "^8.0|^9.0|^10.0|^11.0|^12.0",
+        "illuminate/filesystem": "^8.0|^9.0|^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0|^10.0|^11.0",
+        "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

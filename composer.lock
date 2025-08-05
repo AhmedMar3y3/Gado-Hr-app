@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfe12996eeecb6fdc8713a9fd9d431f8",
+    "content-hash": "b0736585b94d464cc37741a71f5d419a",
     "packages": [
         {
             "name": "brick/math",
@@ -1888,6 +1888,47 @@
                 }
             ],
             "time": "2024-09-21T08:32:55+00:00"
+        },
+        {
+            "name": "mar3y/image-upload",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AhmedMar3y3/image-upload.git",
+                "reference": "f9a68eb43eb908d5a57b0d8519e43c27a6f66c97"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AhmedMar3y3/image-upload/zipball/f9a68eb43eb908d5a57b0d8519e43c27a6f66c97",
+                "reference": "f9a68eb43eb908d5a57b0d8519e43c27a6f66c97",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/filesystem": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "php": "^7.4|^8.0|^8.1|^8.2|^8.3"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^9.0|^10.0|^11.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "mar3y\\ImageUpload\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A package for handling image uploads in Laravel applications.",
+            "support": {
+                "issues": "https://github.com/AhmedMar3y3/image-upload/issues",
+                "source": "https://github.com/AhmedMar3y3/image-upload/tree/v1.0.0"
+            },
+            "time": "2025-06-08T11:20:09+00:00"
         },
         {
             "name": "monolog/monolog",

@@ -16,19 +16,26 @@ trait HttpResponses
     }
 
 
-    public function successResponse($message = 'تم بنجاح')
+    public function successResponse($message = null)
     {
+        if ($message === null) {
+            $message = __('messages.success');
+        }
         return $this->response('success', $message, [], 200);
     }
 
     public function successWithDataResponse($data)
     {
-        return $this->response('success', 'تم بنجاح', $data, 200);
+        return $this->response('success', __('messages.success'), $data, 200);
     }
 
-   public function successWithDataAndMessageResponse($message, $data)
+    public function unauthenticatedResponse()
     {
-        return $this->response('success', $message, $data, 200);
+        return $this->response('unauthenticated', __('messages.unauthenticated'), [], 401);
+    }
+    public function unauthorizedResponse()
+    {
+        return $this->response('unauthorized', __('messages.unauthorized'), [], 403);
     }
 
     public function failureResponse($message)

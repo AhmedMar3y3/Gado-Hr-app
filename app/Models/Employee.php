@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Enums\Role;
-use App\Traits\HasImage;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
+use mar3y\ImageUpload\Traits\HasImage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -34,6 +34,8 @@ class Employee extends Authenticatable
 
         'role' => Role::class,
     ];
+
+    protected static $imageAttributes = ['image'];
 
     public function setPasswordAttribute($password)
     {

@@ -28,14 +28,11 @@ class AttendanceController extends Controller
             return $this->failureResponse('لم يتم العثور على الموظف.');
         }
 
-        $currentLat = $request->input('latitude');
-        $currentLon = $request->input('longitude');
-
         if (empty($currentLat) || empty($currentLon)) {
             return $this->failureResponse('خطأ: يجب إدخال خط العرض وخط الطول.');
         }
 
-        if (!$this->attendanceService->isWithinDistance($employee, $currentLat, $currentLon)) {
+        if (!$this->attendanceService->isWithinDistance($employee, $request->input('latitude'), $request->input('longitude'))) {
             return $this->failureResponse('أنت لست ضمن المسافة المسموح بها من الموقع.');
         }
 
@@ -64,21 +61,14 @@ class AttendanceController extends Controller
     public function attendanceHistory(Request $request)
     {
         $employee = Auth('employee')->user();
-        $month = $request->input('month');
-        $year = $request->input('year');
-
-        $attendances = $this->attendanceService->getAttendanceHistory($employee, $month, $year);
-
+        $attendances = $this->attendanceService->getAttendanceHistory($employee, $request->input('month'), $request->input('year'));
         return $this->successWithDataResponse(AttendanceResource::collection($attendances));
     }
 
     public function departureHistory(Request $request)
     {
         $employee = Auth('employee')->user();
-        $month = $request->input('month');
-        $year = $request->input('year');
-
-        $departures = $this->attendanceService->getDepartureHistory($employee, $month, $year);
+        $departures = $this->attendanceService->getDepartureHistory($employee, $request->input('month'), $request->input('year'));
         return $this->successWithDataResponse(DepartureResource::collection($departures));
     }
 }
