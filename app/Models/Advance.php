@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Advance extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'type',
+        'amount',
+        'status',
+        'num_of_months',
+        'employee_id',
+    ];
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }

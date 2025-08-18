@@ -22,7 +22,13 @@ return new class extends Migration
             $table->string('city');
             $table->integer('age');
             $table->integer('off_days')->default(0);
-            $table->decimal('salary',10,2);
+            $table->decimal('salary', 10, 2);
+            $table->double('device_price')->nullable();
+            $table->double('meter_price')->nullable();
+            $table->double('overtime_hour_price')->nullable();
+            $table->double('sold_device_price')->nullable();
+            $table->double('bought_device_price')->nullable();
+            $table->double('commercial_device_price')->nullable();
             $table->foreignId('job_id')->constrained()->onDelete('cascade');
             $table->foreignId('manager_id')->nullable()->constrained('employees')->onDelete('cascade');
             $table->foreignId('shift_id')->constrained()->onDelete('cascade');

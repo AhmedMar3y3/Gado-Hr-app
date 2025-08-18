@@ -13,6 +13,7 @@ class Location extends Model
         'title',
         'long',
         'lat',
+        'is_remote',
     ];
 
     public function employees()

@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('advances', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
-            $table->date('date');
             $table->tinyInteger('status')->default(0);
-            $table->foreignId('employee_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
+            $table->string('type')->default(\App\Enums\AdvanceType::NORMAL);
+            $table->integer('number_of_months')->nullable();
             $table->timestamps();
         });
     }

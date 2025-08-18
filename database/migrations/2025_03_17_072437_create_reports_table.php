@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->text('content');
-            $table->tinyInteger('addition')->default(0);
-            $table->text('addition_target')->nullable();
-            $table->integer('addition_overtime')->default(0);
+            $table->integer('num_of_devices')->nullable();
+            $table->double('num_of_meters')->nullable();
+            $table->double('overtime_hours')->nullable();
+            $table->integer('sold_devices')->nullable();
+            $table->integer('bought_devices')->nullable();
+            $table->integer('commercial_devices')->nullable();
             $table->boolean('is_confirmed')->default(false);
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
             $table->timestamps();

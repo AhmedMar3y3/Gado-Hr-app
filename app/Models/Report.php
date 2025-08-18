@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Enums\ReportAddition;
 
 class Report extends Model
 {
@@ -13,15 +12,18 @@ class Report extends Model
     protected $fillable = [
         'date',
         'content',
-        'addition',
-        'addition_target',
-        'addition_overtime',
+        'overtime',
         'is_confirmed',
-        'employee_id'
+        'employee_id',
+        'num_of_devices',
+        'num_of_meters',
+        'overtime_hours',
+        'sold_devices',
+        'bought_devices',
+        'commercial_devices',
     ];
 
     protected $casts = [
-        'addition' => ReportAddition::class,
         'date' => 'date',
         'is_confirmed' => 'boolean'
     ];

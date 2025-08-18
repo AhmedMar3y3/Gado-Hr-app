@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
+            $table->boolean('about_employee')->default(false);
+            $table->foreignId('employee_id')->nullable()->constrained('employees')->onDelete('cascade');
             $table->timestamps();
         });
     }

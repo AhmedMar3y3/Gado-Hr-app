@@ -28,6 +28,12 @@ class Employee extends Authenticatable
         'location_id',
         'off_days',
         'salary',
+        'device_price',
+        'meter_price',
+        'overtime_hour_price',
+        'sold_device_price',
+        'bought_device_price',
+        'commercial_device_price',
     ];
 
     protected $casts = [
@@ -109,5 +115,25 @@ class Employee extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function deductions()
+    {
+        return $this->hasMany(Deduction::class);
+    }
+
+    public function papers()
+    {
+        return $this->hasMany(EmployeePaper::class);
+    }
+
+    public function cars()
+    {
+        return $this->hasOne(Car::class);
     }
 }
