@@ -7,18 +7,21 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Services\AttendanceService;
+use App\Services\DailyReportService;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\Attendence\DepartureResource;
 use App\Http\Resources\API\Attendence\AttendanceResource;
+use App\Http\Requests\API\Filters\AttendanceFilterRequest;
 
 class AttendanceController extends Controller
 {
     use HttpResponses;
     protected $attendanceService;
+    protected $dailyReportService;
 
-    public function __construct(AttendanceService $attendanceService)
+    public function __construct(AttendanceService $attendanceService, DailyReportService $dailyReportService)
     {
         $this->attendanceService = $attendanceService;
+        $this->dailyReportService = $dailyReportService;
     }
 
     public function attendance(Request $request)
@@ -49,6 +52,11 @@ class AttendanceController extends Controller
             }
             return $this->failureResponse('حدث خطأ أثناء تسجيل الحضور.');
         } elseif ($attendance->attendance && !$attendance->departure) {
+            
+            if (!$this->dailyReportService->hasDailyReport($employee)) {
+                return $this->failureResponse('يجب تقديم التقرير اليومي قبل تسجيل المغادرة.');
+            }
+            
             if ($this->attendanceService->recordCheckOut($employee, $currentTime)) {
                 return $this->successWithDataAndMessageResponse('تم تسجيل المغادرة بنجاح.', 'departure');
             }
@@ -58,17 +66,13 @@ class AttendanceController extends Controller
         }
     }
 
-    public function attendanceHistory(Request $request)
+    public function attendanceHistory(AttendanceFilterRequest $request)
     {
         $employee = Auth('employee')->user();
-        $attendances = $this->attendanceService->getAttendanceHistory($employee, $request->input('month'), $request->input('year'));
+        $month = $request->getMonth();
+        $year = $request->getYear();
+        
+        $attendances = $this->attendanceService->getCombinedAttendanceHistory($employee, $month, $year);
         return $this->successWithDataResponse(AttendanceResource::collection($attendances));
-    }
-
-    public function departureHistory(Request $request)
-    {
-        $employee = Auth('employee')->user();
-        $departures = $this->attendanceService->getDepartureHistory($employee, $request->input('month'), $request->input('year'));
-        return $this->successWithDataResponse(DepartureResource::collection($departures));
     }
 }

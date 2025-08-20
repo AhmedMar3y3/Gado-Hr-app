@@ -4,36 +4,51 @@ namespace App\Http\Controllers\API\Report;
 
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
+use App\Services\DailyReportService;
 use App\Http\Resources\API\Report\ReportsResource;
-use App\Http\Requests\API\Report\StoreReportRequest;
 use App\Http\Resources\API\Report\ReportDetailsResource;
+use App\Http\Requests\API\Report\StoreDailyReportRequest;
+use App\Http\Requests\API\Filters\ReportFilterRequest;
 
 class ReportController extends Controller
 {
     use HttpResponses;
+    protected $dailyReportService;
 
-    public function index()
+    public function __construct(DailyReportService $dailyReportService)
     {
-        $reports = auth('employee')->user()->reports()->get();
+        $this->dailyReportService = $dailyReportService;
+    }
+
+    public function index(ReportFilterRequest $request)
+    {
+        $employee = auth('employee')->user();
+        $month = $request->getMonth();
+        $year = $request->getYear();
+        
+        $reports = $employee->reports()->with('employee.job')->where('is_confirmed', true)
+            ->whereYear('date', $year)
+            ->whereMonth('date', $month)
+            ->orderBy('date', 'desc')
+            ->get();
+            
         return $this->successWithDataResponse(ReportsResource::collection($reports));
     }
 
     public function show($id)
     {
-        $report = auth('employee')->user()->reports()->findOrFail($id);
-        if (!$report) {
-            return $this->failureResponse('التقرير غير موجود');
-        }
+        $report = auth('employee')->user()->reports()->with('employee.job')->findOrFail($id);
         return $this->successWithDataResponse(new ReportDetailsResource($report));
     }
-    public function store(StoreReportRequest $request)
+
+    public function storeDailyReport(StoreDailyReportRequest $request)
     {
-        $user = auth('employee')->user();
-        if ($user->checkRole($user->role)) {
-            $user->reports()->create($request->validated() + ['date' => today(), 'is_confirmed' => 1]);
-            return $this->successResponse('تم اضافة التقرير بنجاح');
+        $employee = auth('employee')->user();
+        
+        if ($this->dailyReportService->hasDailyReport($employee)) {
+            return $this->failureResponse('لقد قمت بتقديم التقرير اليومي بالفعل.');
         }
-        $user->reports()->create($request->validated() + ['date' => today()]);
-        return $this->successResponse('تم اضافة التقرير بنجاح');
+        $this->dailyReportService->createDailyReport($employee, $request->validated());
+        return $this->successResponse('تم تقديم التقرير اليومي بنجاح.');
     }
 }

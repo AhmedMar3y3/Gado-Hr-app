@@ -10,9 +10,9 @@ class HolidaysTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('holidays')->insert([
-            ['date' => '2023-01-01', 'title' => 'New Year\'s Day', 'type' => 'public'],
-            ['date' => '2023-12-25', 'title' => 'Christmas Day', 'type' => 'public'],
-            ['date' => '2023-07-04', 'title' => 'Independence Day', 'type' => 'public'],
+            ['from' => '2025-08-30', 'to' => '2025-08-31', 'title' => 'عيد الأضحى'],
+            ['from' => '2025-09-01', 'to' => '2025-09-02', 'title' => 'عيد الأضحى'],
+            ['from' => '2025-09-03', 'to' => '2025-09-04', 'title' => 'عيد الأضحى'],
         ]);
     }
 }

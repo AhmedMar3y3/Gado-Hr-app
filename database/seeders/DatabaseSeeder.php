@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             JobsTableSeeder::class,
             LocationTableSeeder::class,
             EmployeesTableSeeder::class,
+            ReportsTableSeeder::class,
+            // AttendanceTableSeeder::class,
             HolidaysTableSeeder::class,
             SettingsTableSeeder::class,
         ]);

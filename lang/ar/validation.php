@@ -215,7 +215,12 @@ return [
         'job_type' => 'نوع الوظيفة',
         'job' => 'الوظيفة',
         'role' => 'الدور',
-        'today' => 'اليوم'
+        'today' => 'اليوم',
+        'license_plate' => 'لوحة الترخيص',
+        'license_issue' => 'تاريخ إصدار الرخصة',
+        'license_renewal' => 'تاريخ تجديد الرخصة',
+        'last_oil_change' => 'تاريخ آخر تغيير زيت',
+        'next_oil_change' => 'تاريخ تغيير الزيت التالي',
     ],
 
 ];

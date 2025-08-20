@@ -21,7 +21,7 @@ class ProfileResource extends JsonResource
             'phone' => $this->phone,
             'city' => $this->city,
             'age' => $this->age,
-            'image' => $this->image,
+            'image' => $this->image ?? env('APP_URL') . '/defaults/profile.webp',
         ];
     }
 }

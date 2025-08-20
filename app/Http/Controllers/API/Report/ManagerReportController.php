@@ -5,50 +5,100 @@ namespace App\Http\Controllers\API\Report;
 use App\Models\Report;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\Report\UpdateReportRequest;
-use App\Http\Resources\API\Report\EmployeeReportsResource;
-use App\Http\Resources\API\Report\EmployeeReportDetailsResource;
+use App\Services\DailyReportService;
+use App\Http\Requests\API\Report\UpdateDailyReportRequest;
+use App\Http\Resources\API\Report\JobSpecificReportResource;
+use App\Http\Requests\API\Filters\ReportFilterRequest;
 
 class ManagerReportController extends Controller
 {
     use HttpResponses;
+    protected $dailyReportService;
 
-    public function employeeReports()
+    public function __construct(DailyReportService $dailyReportService)
+    {
+        $this->dailyReportService = $dailyReportService;
+    }
+
+    public function employeeReports(ReportFilterRequest $request)
     {
         $user = auth('employee')->user();
         $employeeIds = $user->employees->pluck('id');
-        $reports = Report::whereIn('employee_id', $employeeIds)->where('is_confirmed', 0)->get(); 
-        return $this->successWithDataResponse(EmployeeReportsResource::collection($reports));
+        $month = $request->getMonth();
+        $year = $request->getYear();
+        
+        $reports = Report::whereIn('employee_id', $employeeIds)
+            ->with('employee.job')
+            ->where('is_confirmed', false)
+            ->whereYear('date', $year)
+            ->whereMonth('date', $month)
+            ->orderBy('created_at', 'desc')
+            ->get(); 
+            
+        return $this->successWithDataResponse(JobSpecificReportResource::collection($reports));
+    }
+
+    public function confirmedReports()
+    {
+        $user = auth('employee')->user();
+        $employeeIds = $user->employees->pluck('id');
+        
+        $reports = Report::whereIn('employee_id', $employeeIds)
+            ->with('employee.job')
+            ->where('is_confirmed', true)
+            ->whereYear('date', now()->year)
+            ->whereMonth('date', now()->month)
+            ->orderBy('created_at', 'desc')
+            ->get(); 
+            
+        return $this->successWithDataResponse(JobSpecificReportResource::collection($reports));
+    }
+
+    public function allReports()
+    {
+        $user = auth('employee')->user();
+        $employeeIds = $user->employees->pluck('id');
+        
+        $reports = Report::whereIn('employee_id', $employeeIds)
+            ->with('employee.job')
+            ->whereYear('date', now()->year)
+            ->whereMonth('date', now()->month)
+            ->orderBy('created_at', 'desc')
+            ->get(); 
+            
+        return $this->successWithDataResponse(JobSpecificReportResource::collection($reports));
     }
 
     public function show($id)
     {
-        $report = Report::findOrFail($id);
-        if (!$report) {
-            return $this->failureResponse('التقرير غير موجود');
-        }
-        return $this->successWithDataResponse(new EmployeeReportDetailsResource($report));
+        $user = auth('employee')->user();
+        $employeeIds = $user->employees->pluck('id');
+        
+        $report = Report::whereIn('employee_id', $employeeIds)
+            ->with('employee.job')
+            ->findOrFail($id);
+            
+        return $this->successWithDataResponse(new JobSpecificReportResource($report));
     }
     
-    public function update(UpdateReportRequest $request, $id)
+    public function update(UpdateDailyReportRequest $request, $id)
     {
-        $report = Report::findOrFail($id);
-        if (!$report) {
-            return $this->failureResponse('التقرير غير موجود');
-        }
-       
-        $report->update($request->validated());
+        $user = auth('employee')->user();
+        $employeeIds = $user->employees->pluck('id');
+        
+        $report = Report::whereIn('employee_id', $employeeIds)
+            ->with('employee.job')
+            ->findOrFail($id);
+        
+        $this->dailyReportService->updateReport($report, $request->validated());
         return $this->successResponse('تم تعديل التقرير بنجاح');
     }
 
     public function confirmReport($id)
     {
         $user = auth('employee')->user();
-
-        $report = Report::findOrFail($id);
-        if (!$report) {
-            return $this->failureResponse('التقرير غير موجود');
-        }
+        $employeeIds = $user->employees->pluck('id');
+        $report = Report::whereIn('employee_id', $employeeIds)->findOrFail($id);
         $report->update(['is_confirmed' => 1]);
         return $this->successResponse('تم تأكيد التقرير بنجاح');
     }

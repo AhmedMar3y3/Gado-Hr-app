@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->date('date');
             $table->time('time');
-            $table->string('link')->after('title');
+            $table->string('link');
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

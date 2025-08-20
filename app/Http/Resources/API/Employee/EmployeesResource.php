@@ -18,7 +18,7 @@ class EmployeesResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'job' => $this->job->title,
-            'image' => $this->image,
+            'image' => $this->image ?? env('APP_URL') . '/defaults/profile.webp',
         ];
     }
 }

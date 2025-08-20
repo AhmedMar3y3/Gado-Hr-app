@@ -6,9 +6,17 @@ use Carbon\Carbon;
 use App\Models\Setting;
 use App\Models\Attendance;
 use App\Enums\AttendanceStatus;
+use App\Services\DailyReportService;
 
 class AttendanceService
 {
+    protected $dailyReportService;
+
+    public function __construct(DailyReportService $dailyReportService)
+    {
+        $this->dailyReportService = $dailyReportService;
+    }
+
     public function isWithinDistance($employee, $currentLat, $currentLon): bool
     {
         $office = $employee->location;
@@ -85,6 +93,11 @@ class AttendanceService
             return false;
         }
 
+        // Check if employee has submitted daily report
+        if (!$this->dailyReportService->hasDailyReport($employee)) {
+            return false;
+        }
+
         $shift = $employee->shift;
         $shiftEnd = Carbon::createFromFormat('H:i:s', $shift->end_time)
             ->setDate($currentTime->year, $currentTime->month, $currentTime->day);
@@ -137,6 +150,27 @@ class AttendanceService
             $endDate = $startDate->copy()->endOfMonth();
             $query->whereBetween('date', [$startDate, $endDate]);
         }
+
+        return $query->get();
+    }
+
+    public function getCombinedAttendanceHistory($employee, $month = null, $year = null)
+    {
+        $query = $employee->attendances()->orderBy('date', 'desc');
+
+        if ($month && $year) {
+            $startDate = Carbon::create($year, $month, 1)->startOfMonth();
+            $endDate = $startDate->copy()->endOfMonth();
+            $query->whereBetween('date', [$startDate, $endDate]);
+        }
+
+        $query->where(function ($q) {
+            $q->where('date', '!=', Carbon::today())
+              ->orWhere(function ($subQ) {
+                  $subQ->where('date', Carbon::today())
+                       ->whereNotNull('departure');
+              });
+        });
 
         return $query->get();
     }

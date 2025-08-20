@@ -18,7 +18,7 @@ class ManagerArticleController extends Controller
     }
     public function store(StoreArticleRequest $request)
     {
-        $article = Article::create($request->validated() + ['employee_id' => auth('employee')->id()]);
+        Article::create($request->validated() + ['employee_id' => auth('employee')->id()]);
         return $this->successResponse('تم إنشاء المقال بنجاح');
     }
 }
