@@ -1,14 +1,13 @@
 <?php
-
 namespace App\Http\Controllers\API\Leave;
 
-use App\Traits\HttpResponses;
-use App\Services\LeaveService;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\Leave\LeaveResource;
+use App\Http\Requests\API\Filters\LeaveFilterRequest;
 use App\Http\Requests\API\Leave\StoreLeaveRequest;
-use App\Http\Resources\API\Leave\LeaveStatisticsResource;
+use App\Http\Resources\API\Leave\LeaveWithStatsResource;
+use App\Services\LeaveService;
+use App\Traits\HttpResponses;
+use Illuminate\Support\Facades\Auth;
 
 class LeaveController extends Controller
 {
@@ -20,11 +19,21 @@ class LeaveController extends Controller
         $this->leaveService = $leaveService;
     }
 
-    public function index()
+    public function index(LeaveFilterRequest $request)
     {
         $employee = Auth::guard('employee')->user();
-        $leaves = $this->leaveService->getEmployeeLeaves($employee);
-        return $this->successWithDataResponse(LeaveResource::collection($leaves));
+        $month    = $request->getMonth();
+        $year     = $request->getYear();
+
+        $leaves     = $this->leaveService->getEmployeeLeaves($employee, $month, $year);
+        $statistics = $this->leaveService->getLeaveStatistics($employee);
+
+        $data = [
+            'leaves'     => $leaves,
+            'statistics' => $statistics,
+        ];
+
+        return $this->successWithDataResponse(new LeaveWithStatsResource($data));
     }
 
     public function store(StoreLeaveRequest $request)
@@ -32,13 +41,5 @@ class LeaveController extends Controller
         $employee = Auth::guard('employee')->user();
         $this->leaveService->createLeaveRequest($employee, $request->validated());
         return $this->successResponse('تم ارسال طلب الاجازة بنجاح');
-    }
-
-
-    public function statistics()
-    {
-        $employee = Auth::guard('employee')->user();
-        $statistics = $this->leaveService->getLeaveStatistics($employee);
-        return $this->successWithDataResponse(new LeaveStatisticsResource($statistics));
     }
 }

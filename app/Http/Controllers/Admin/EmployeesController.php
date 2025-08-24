@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Enums\Role;
 use App\Models\Employee;

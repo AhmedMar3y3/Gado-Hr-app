@@ -93,7 +93,6 @@ class AttendanceService
             return false;
         }
 
-        // Check if employee has submitted daily report
         if (!$this->dailyReportService->hasDailyReport($employee)) {
             return false;
         }

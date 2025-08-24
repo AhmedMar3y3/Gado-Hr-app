@@ -224,6 +224,10 @@ return [
         'about_employee' => 'عن الموظف',
         'duration_in_days' => 'مدة الإجازة (بالأيام)',
         'employee_id' => 'معرف الموظف',
+        'number_of_months' => 'عدد الأشهر',
+        'amount' => "المبلغ",
+        'from' => 'من',
+        'to' => 'إلى',
     ],
 
 ];

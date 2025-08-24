@@ -136,4 +136,9 @@ class Employee extends Authenticatable
     {
         return $this->hasOne(Car::class, 'employee_id');
     }
+
+    public function advances()
+    {
+        return $this->hasMany(Advance::class);
+    }
 }

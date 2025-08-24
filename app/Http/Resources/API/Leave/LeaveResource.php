@@ -17,8 +17,8 @@ class LeaveResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'created_at' => $this->created_at->translatedFormat('l, j F'),
-            'num_of_days' => $this->num_of_days,
+            'date' => $this->created_at->translatedFormat('l, j F'),
+            'num_of_days' => $this->num_of_days . ' ' . ($this->num_of_days == 1 || $this->num_of_days > 10 ? 'يوم' : 'ايام'),
             'from' => Carbon::parse($this->from)->translatedFormat('d F'),
             'status' => [
                 'label' => config('enums.status_labels')[$this->status->value],

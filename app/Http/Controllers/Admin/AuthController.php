@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Traits\HttpResponses;

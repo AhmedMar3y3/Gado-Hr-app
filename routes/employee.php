@@ -18,7 +18,9 @@ use App\Http\Controllers\API\Report\ManagerReportController;
 use App\Http\Controllers\API\Attendence\AttendanceController;
 use App\Http\Controllers\API\Meeting\ManagerMeetingController;
 use App\Http\Controllers\API\Deduction\ManagerDeductionController;
-
+use App\Http\Controllers\API\Advance\AdvanceController;
+use App\Http\Controllers\API\Advance\ManagerAdvanceController;
+use App\Http\Controllers\API\EmployeeRequests\RequestsController;
 
 Route::post('login'          , [AuthController::class, 'login']);
 Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
@@ -47,7 +49,6 @@ Route::middleware(['auth.employee'])->group(function () {
     // Leaves routes
     Route::get('leaves',        [LeaveController::class, 'index']);
     Route::post('leaves',       [LeaveController::class, 'store']);
-    Route::get('statistics',    [LeaveController::class, 'statistics']);
 
     // Faq routes
     Route::get('faqs',          [FaqController::class, 'index']);
@@ -61,6 +62,10 @@ Route::middleware(['auth.employee'])->group(function () {
     // Employee Cars routes
     Route::get('my-car', [CarController::class, 'myCar']);
 
+    // Employee Advance routes
+    Route::get('advances' , [AdvanceController::class, 'index']);
+    Route::post('advances', [AdvanceController::class, 'store']);
+
     // Articles routes
     Route::get('articles', [ArticleController::class, 'index']);
 });
@@ -73,12 +78,6 @@ Route::middleware(['auth.employee', 'role:1'])->group(function () {
     Route::post('meetings',              [ManagerMeetingController::class, 'store']);
     Route::get('employees',              [ManagerMeetingController::class, 'employees']);
 
-    // Leave routes
-    Route::get('employee-leaves',        [ManagerLeaveController::class, 'employeeLeaves']);
-    Route::get('leave-details/{id}',     [ManagerLeaveController::class, 'leaveDetails']);
-    Route::put('accept-leave/{id}',      [ManagerLeaveController::class, 'acceptLeave']);
-    Route::put('reject-leave/{id}',      [ManagerLeaveController::class, 'rejectLeave']);
-
     // Manager report routes
     Route::get('/employees-reports'     ,[ManagerReportController::class, 'employeeReports']);
     Route::get('/employees-reports/{id}',[ManagerReportController::class, 'show']);
@@ -86,17 +85,32 @@ Route::middleware(['auth.employee', 'role:1'])->group(function () {
     Route::get('/all-reports'           ,[ManagerReportController::class, 'allReports']);
     Route::put('/daily-reports/{id}'    ,[ManagerReportController::class, 'update']);
     Route::post('/confirm-report/{id}'  ,[ManagerReportController::class, 'confirmReport']);
-
+    
     // Manager Deduction routes
     Route::get('deductions' ,     [ManagerDeductionController::class, 'index']);
     Route::post('deductions',     [ManagerDeductionController::class, 'store']);
-
+    
     // Manager Car routes
     Route::get('cars'         , [ManagerCarController::class, 'index']);
     Route::get('cars/{car}'   , [ManagerCarController::class, 'show']);
     Route::post('cars'        , [ManagerCarController::class, 'store']);
     Route::put('cars/{car}'   , [ManagerCarController::class, 'update']);
     Route::delete('cars/{car}', [ManagerCarController::class, 'destroy']);
+    
+    // Leave routes
+    Route::get('leave-details/{leave}' , [ManagerLeaveController::class, 'leaveDetails']);
+    Route::put('approve-leave/{leave}' , [ManagerLeaveController::class, 'approveLeave']);
+    Route::put('reject-leave/{leave}'  , [ManagerLeaveController::class, 'rejectLeave']);
+
+    // Manager Advance routes
+    Route::get('advance-details/{advance}', [ManagerAdvanceController::class, 'advanceDetails']);
+    Route::put('approve-advance/{advance}', [ManagerAdvanceController::class, 'approveAdvance']);
+    Route::put('reject-advance/{advance}' , [ManagerAdvanceController::class, 'rejectAdvance']);
+    
+    // Manager Requests routes (not used but could be)
+    Route::get('employee-advances', [RequestsController::class, 'employeeAdvances']);
+    Route::get('employee-requests', [RequestsController::class, 'employeeRequests']);
+    Route::get('request-details/{type}/{id}', [RequestsController::class, 'requestDetails']);
 
     // Employee routes
     Route::get('manager-employees'     , [EmployeesController::class, 'getEmployees']);

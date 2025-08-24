@@ -1,42 +1,66 @@
 <?php
-
 namespace App\Http\Controllers\API\Leave;
 
 use App\Models\Leave;
-use App\Enums\Status;
 use App\Traits\HttpResponses;
+use App\Services\LeaveService;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\Leave\LeavesResource;
 use App\Http\Resources\API\Leave\LeaveDetailsResource;
 
 class ManagerLeaveController extends Controller
 {
     use HttpResponses;
-    public function employeeLeaves()
+
+    protected $leaveService;
+
+    public function __construct(LeaveService $leaveService)
     {
-        $user = Auth('employee')->user();
-        $leaves = Leave::where('status',Status::PENDING->value)->whereHas('employee', function ($query) use ($user) {
-            $query->where('manager_id', $user->id);
-        })->with('employee')->get();
-        return $this->successWithDataResponse(LeavesResource::collection($leaves));
+        $this->leaveService = $leaveService;
     }
 
-    public function leaveDetails($id)
+    public function leaveDetails(Leave $leave)
     {
-        $leave = Leave::find($id);
+        $manager = auth('employee')->user();
+
+        if (! $this->leaveService->canManagerAccessLeave($manager, $leave)) {
+            return $this->failureResponse('لا يمكنك الوصول لهذا الطلب');
+        }
+        
         return $this->successWithDataResponse(new LeaveDetailsResource($leave));
     }
 
-    public function acceptLeave($id)
+    public function approveLeave(Leave $leave)
     {
-        $leave = Leave::find($id);
-        $leave->update(['status' => Status::APPROVED->value]);
-        return $this->successResponse('تم قبول الطلب بنجاح');
+        $manager            = auth('employee')->user();
+        $managerEmployeeIds = $manager->employees->pluck('id');
+
+        if (! $managerEmployeeIds->contains($leave->employee_id)) {
+            return $this->failureResponse('لا يمكنك الوصول لهذا الطلب');
+        }
+
+        if ($leave->status !== \App\Enums\Status::PENDING) {
+            return $this->failureResponse('لا يمكن الموافقة على طلب غير معلق');
+        }
+
+        $this->leaveService->approveLeave($leave);
+
+        return $this->successResponse('تم الموافقة على طلب الإجازة بنجاح');
     }
-    public function rejectLeave($id)
+
+    public function rejectLeave(Leave $leave)
     {
-        $leave = Leave::find($id);
-        $leave->update(['status' => Status::REJECTED->value]);
-        return $this->successResponse('تم رفض الطلب بنجاح');
+        $manager            = auth('employee')->user();
+        $managerEmployeeIds = $manager->employees->pluck('id');
+
+        if (! $managerEmployeeIds->contains($leave->employee_id)) {
+            return $this->failureResponse('لا يمكنك الوصول لهذا الطلب');
+        }
+
+        if ($leave->status !== \App\Enums\Status::PENDING) {
+            return $this->failureResponse('لا يمكن رفض طلب غير معلق');
+        }
+
+        $this->leaveService->rejectLeave($leave);
+        return $this->successResponse('تم رفض طلب الإجازة بنجاح');
     }
 }

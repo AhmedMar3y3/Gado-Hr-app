@@ -11,7 +11,7 @@ return [
 
     'status_labels' => [
         Status::PENDING->value => 'قيد المراجعة',
-        Status::APPROVED->value => 'موافقة',
+        Status::APPROVED->value => 'مقبولة',
         Status::REJECTED->value => 'مرفوضة',
     ],
 

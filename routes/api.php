@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\Admin\AuthController;
-use App\Http\Controllers\API\Admin\EmployeesController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\EmployeesController;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login',    [AuthController::class, 'login']);
