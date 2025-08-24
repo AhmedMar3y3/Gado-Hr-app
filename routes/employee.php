@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Article\ArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Faq\FaqController;
 use App\Http\Controllers\API\Car\CarController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\API\Car\ManagerCarController;
 use App\Http\Controllers\API\Meeting\MeetingController;
 use App\Http\Controllers\API\Profile\ProfileController;
 use App\Http\Controllers\API\Leave\ManagerLeaveController;
+use App\Http\Controllers\API\Employee\EmployeesController;
 use App\Http\Controllers\API\Deduction\DeductionController;
 use App\Http\Controllers\API\Report\ManagerReportController;
 use App\Http\Controllers\API\Attendence\AttendanceController;
@@ -58,6 +60,9 @@ Route::middleware(['auth.employee'])->group(function () {
 
     // Employee Cars routes
     Route::get('my-car', [CarController::class, 'myCar']);
+
+    // Articles routes
+    Route::get('articles', [ArticleController::class, 'index']);
 });
 
 // Manager routes
@@ -92,6 +97,13 @@ Route::middleware(['auth.employee', 'role:1'])->group(function () {
     Route::post('cars'        , [ManagerCarController::class, 'store']);
     Route::put('cars/{car}'   , [ManagerCarController::class, 'update']);
     Route::delete('cars/{car}', [ManagerCarController::class, 'destroy']);
+
+    // Employee routes
+    Route::get('manager-employees'     , [EmployeesController::class, 'getEmployees']);
+    Route::get('manager-employees/{id}', [EmployeesController::class, 'showEmployeeDetails']);
+
+    // Articles routes
+    Route::post('articles', [ArticleController::class, 'store']);
 });
 
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources\API\Article;
 
 use Illuminate\Http\Request;
@@ -14,12 +13,21 @@ class ArticlesResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
+        $data = [
+            'id'      => $this->id,
+            'title'   => $this->title,
             'content' => $this->content,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'about_employee' => $this->about_employee
         ];
+
+        if ($this->about_employee) {
+            $data['employee'] = [
+                'name'  => optional($this->employee)->name,
+                'image' => optional($this->employee)->image ?? env('APP_URL') . '/defaults/profile.webp',
+                'job_title' => optional($this->employee)->job->title,
+            ];
+        }
+
+        return $data;
     }
 }

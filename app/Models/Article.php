@@ -13,7 +13,8 @@ class Article extends Model
         'title',
         'content',
         'about_employee',
-        'employee_id'
+        'employee_id',
+        'duration_in_days',
     ];
 
     public function employee()

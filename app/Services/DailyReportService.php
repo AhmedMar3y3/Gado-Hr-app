@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\Report;
-use App\Models\Employee;
 use App\Enums\JobType;
 
 class DailyReportService
@@ -123,20 +122,15 @@ class DailyReportService
         }
     }
 
-    /**
-     * Update report with job-specific field filtering
-     */
     public function updateReport(Report $report, array $data): Report
     {
         $jobType = $report->employee->job->type;
         $updateData = [];
 
-        // Always allow content update
         if (isset($data['content'])) {
             $updateData['content'] = $data['content'];
         }
 
-        // Add job-specific fields based on employee's job type
         switch ($jobType) {
             case JobType::DRIVER:
                 if (isset($data['num_of_devices'])) {

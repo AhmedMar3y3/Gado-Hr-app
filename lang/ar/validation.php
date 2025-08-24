@@ -221,6 +221,9 @@ return [
         'license_renewal' => 'تاريخ تجديد الرخصة',
         'last_oil_change' => 'تاريخ آخر تغيير زيت',
         'next_oil_change' => 'تاريخ تغيير الزيت التالي',
+        'about_employee' => 'عن الموظف',
+        'duration_in_days' => 'مدة الإجازة (بالأيام)',
+        'employee_id' => 'معرف الموظف',
     ],
 
 ];

@@ -1,12 +1,12 @@
 <?php
-
 namespace App\Http\Resources\API\Report;
 
+use Carbon\Carbon;
+use App\Enums\JobType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Enums\JobType;
 
-class JobSpecificReportResource extends JsonResource
+class ManagerReportsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,44 +16,35 @@ class JobSpecificReportResource extends JsonResource
     public function toArray(Request $request): array
     {
         $baseData = [
-            'id' => $this->id,
-            'date' => $this->date,
-            'content' => $this->content,
+            'id'   => $this->id,
+            'date' => Carbon::parse($this->date)->locale('ar')->translatedFormat('l, j F'),
+            'employee_id'   => $this->employee->id,
+            'name' => $this->employee->name,
         ];
 
         $jobType = $this->employee->job->type;
-        
+
         switch ($jobType) {
             case JobType::DRIVER:
                 $baseData['num_of_devices'] = $this->num_of_devices;
                 $baseData['overtime_hours'] = $this->overtime_hours;
                 break;
-            
+
             case JobType::SALES:
-                $baseData['sold_devices'] = $this->sold_devices;
-                $baseData['bought_devices'] = $this->bought_devices;
+                $baseData['sold_devices']       = $this->sold_devices;
+                $baseData['bought_devices']     = $this->bought_devices;
                 $baseData['commercial_devices'] = $this->commercial_devices;
                 break;
-            
+
             case JobType::TECHNICIAN:
                 $baseData['num_of_devices'] = $this->num_of_devices;
-                $baseData['num_of_meters'] = $this->num_of_meters;
+                $baseData['num_of_meters']  = $this->num_of_meters;
                 break;
-            
+
             case JobType::OTHER:
                 $baseData['overtime_hours'] = $this->overtime_hours;
                 break;
         }
-
-        $baseData['employee'] = [
-            'id' => $this->employee->id,
-            'name' => $this->employee->name,
-            'job' => [
-                'id' => $this->employee->job->id,
-                'title' => $this->employee->job->title,
-                'type' => $this->employee->job->type,
-            ]
-        ];
 
         return $baseData;
     }

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\API\Article\ArticlesResource;
 use App\Http\Requests\API\Article\StoreArticleRequest;
 
-class ManagerArticleController extends Controller
+class ArticleController extends Controller
 {
     use HttpResponses;
 
@@ -18,7 +18,7 @@ class ManagerArticleController extends Controller
     }
     public function store(StoreArticleRequest $request)
     {
-        Article::create($request->validated() + ['employee_id' => auth('employee')->id()]);
+        Article::create($request->validated());
         return $this->successResponse('تم إنشاء المقال بنجاح');
     }
 }
