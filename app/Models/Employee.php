@@ -141,4 +141,9 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(Advance::class);
     }
+
+    public function requests()
+    {
+        return $this->hasMany(Request::class);
+    }
 }

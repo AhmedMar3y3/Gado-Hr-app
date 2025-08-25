@@ -16,7 +16,7 @@
             <a class="nav-link " id="profileDropdown" href="#" data-bs-toggle="dropdown" >
             <div class="navbar-profile d-flex gap-2" style="color: white">
                 
-                <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ Auth::guard('admin')->user()->name }}</p>
+                <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ Auth::user()->name }}</p>
                 <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 <img class="img-xs rounded-circle" src="{{ asset("../../../assets/images/dashboard/avatar.png") }}" alt="">
             </div>
@@ -44,7 +44,7 @@
                 <div class="profile-pic d-flex align-items-center justify-content-end gap-2 w-100">
                    
                     <div class="profile-name">
-                        <h5 class="mb-0 font-weight-normal">{{ Auth::guard('admin')->user()->name }}</h5>
+                        <h5 class="mb-0 font-weight-normal">{{ Auth::user()->name }}</h5>
                         <span>online</span>
                     </div>
                     <div class="count-indicator">
@@ -65,16 +65,7 @@
             </a>
         </li>
         
-        <li class="nav-item menu-items">
-            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.universities.index') }}">
-              
-                <span class="menu-title me-2">الجامعات</span>
-                <span class="menu-icon">
-                    <i class="fa fa-university"></i>
-                </span>
-            </a>
-        </li>
-        <li class="nav-item menu-items">
+        {{-- <li class="nav-item menu-items">
             <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.users.index') }}">
               
                 <span class="menu-title me-2">المستخدمين</span>
@@ -82,8 +73,8 @@
                     <i class="fa fa-users"></i>
                 </span>
             </a>
-        </li>
-        <li class="nav-item menu-items">
+        </li> --}}
+        {{-- <li class="nav-item menu-items">
             <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.subjects.index') }}">
               
                 <span class="menu-title me-2">المواد الدراسية</span>
@@ -91,8 +82,8 @@
                     <i class="fa fa-book"></i>
                 </span>
             </a>
-        </li>
-        <li class="nav-item menu-items">
+        </li> --}}
+        {{-- <li class="nav-item menu-items">
             <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.banners.index') }}">
               
                 <span class="menu-title me-2">البانرات</span>
@@ -100,7 +91,7 @@
                     <i class="fa fa-image"></i>
                 </span>
             </a>
-        </li>
+        </li> --}}
         {{-- <li class="nav-item menu-items">
             <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.admins.index') }}">
               
@@ -110,13 +101,13 @@
                 </span>
             </a>
         </li> --}}
-        <li class="nav-item menu-items">
+        {{-- <li class="nav-item menu-items">
             <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.settings.index') }}">
                 <span class="menu-title me-2">الإعدادات</span>
                 <span class="menu-icon">
                     <i class="fa fa-cogs"></i>
                 </span>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </nav>

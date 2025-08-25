@@ -21,6 +21,8 @@ use App\Http\Controllers\API\Deduction\ManagerDeductionController;
 use App\Http\Controllers\API\Advance\AdvanceController;
 use App\Http\Controllers\API\Advance\ManagerAdvanceController;
 use App\Http\Controllers\API\EmployeeRequests\RequestsController;
+use App\Http\Controllers\API\Request\AttendanceRequestController;
+use App\Http\Controllers\API\Request\ManagerAttendanceRequestController;
 
 Route::post('login'          , [AuthController::class, 'login']);
 Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
@@ -66,6 +68,10 @@ Route::middleware(['auth.employee'])->group(function () {
     Route::get('advances' , [AdvanceController::class, 'index']);
     Route::post('advances', [AdvanceController::class, 'store']);
 
+    // Employee Attendance Request routes
+    Route::get('attendance-requests', [AttendanceRequestController::class, 'index']);
+    Route::post('attendance-requests', [AttendanceRequestController::class, 'store']);
+
     // Articles routes
     Route::get('articles', [ArticleController::class, 'index']);
 });
@@ -107,10 +113,17 @@ Route::middleware(['auth.employee', 'role:1'])->group(function () {
     Route::put('approve-advance/{advance}', [ManagerAdvanceController::class, 'approveAdvance']);
     Route::put('reject-advance/{advance}' , [ManagerAdvanceController::class, 'rejectAdvance']);
     
+    // Manager Attendance Request routes
+    Route::get('employee-attendance-requests', [ManagerAttendanceRequestController::class, 'employeeRequests']);
+    Route::get('attendance-request-details/{attendanceRequest}', [ManagerAttendanceRequestController::class, 'requestDetails']);
+    Route::put('approve-attendance-request/{attendanceRequest}', [ManagerAttendanceRequestController::class, 'approveRequest']);
+    Route::put('reject-attendance-request/{attendanceRequest}', [ManagerAttendanceRequestController::class, 'rejectRequest']);
+
     // Manager Requests routes (not used but could be)
-    Route::get('employee-advances', [RequestsController::class, 'employeeAdvances']);
-    Route::get('employee-requests', [RequestsController::class, 'employeeRequests']);
+    Route::get('employee-requests'          , [RequestsController::class, 'employeeRequests']);
     Route::get('request-details/{type}/{id}', [RequestsController::class, 'requestDetails']);
+    Route::put('approve-request/{type}/{id}', [RequestsController::class, 'approveRequest']);
+    Route::put('reject-request/{type}/{id}' , [RequestsController::class, 'rejectRequest']);
 
     // Employee routes
     Route::get('manager-employees'     , [EmployeesController::class, 'getEmployees']);
